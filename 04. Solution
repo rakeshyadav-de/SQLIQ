@@ -1,0 +1,11 @@
+
+select  *,
+DATEDIFF(day,create_date,resolved_date) num_days_between_dates,
+DATEDIFF(week,create_date,resolved_date) num_weeks_between_dates ,
+DATEDIFF(day,create_date,resolved_date) - DATEDIFF(week,create_date,resolved_date) * 2  - holiday_count as days_took_to_resolve
+from 
+(
+select  ticket_id,create_date,resolved_date,count(holiday_date) as holiday_count from tickets t left join 
+holidays h on h.holiday_date between t.create_date and t.resolved_date
+group by ticket_id,create_date,resolved_date
+)x
