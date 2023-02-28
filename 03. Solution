@@ -1,0 +1,11 @@
+with cte as
+(
+select emp_id,
+max(case when action ='in' then time end) as intime ,
+max(case when action ='out' then time end) as outtime
+from hospital group by emp_id)
+select * from cte where intime > outtime or outtime is null;
+
+with latest_time as(select emp_id, max(time) max_latest_time from hospital group by emp_id),
+latest_in_time as(select emp_id, max(time) max_latest_in_time from hospital where action = 'in' group by emp_id)
+select * from latest_in_time a inner join latest_time b on a.emp_id = b.emp_id and max_latest_in_time =max_latest_time;
