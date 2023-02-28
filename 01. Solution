@@ -1,0 +1,18 @@
+--Two approaches to solve the problem. 
+
+--Approach 1 
+select gold,count(1) as medal_count from events where gold not in (
+select silver from events
+union all
+select bronze from events
+) group by gold;
+
+--Approach 2
+with cte as (
+select bronze as player ,'bronze' as medal_type from events
+union all
+select silver as player ,'silver' as medal_type from events
+union all
+select gold as player ,'gold' as medal_type from events
+)
+select  player, count(1) as medal_count from cte group by player having count(distinct medal_type)=1 and max(medal_type)='gold';
