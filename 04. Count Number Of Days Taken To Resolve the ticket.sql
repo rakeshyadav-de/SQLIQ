@@ -16,7 +16,8 @@ holiday_date date
 ,reason varchar(100)
 );
 
+truncate table  holidays ;
 insert into holidays values
-('2022-08-14','Independence day')
-('2022-08-11','abc'),
-('2022-08-15','Independence day');
+('2022-08-14','Sunday'),
+('2022-08-15','Independence day'),
+('2022-08-11','Rakhi');
