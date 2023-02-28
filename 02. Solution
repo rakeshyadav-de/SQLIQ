@@ -1,0 +1,8 @@
+with cte as(
+select dept_id, salary from emp_salary group by dept_id, salary having count(1)>1)
+select * from cte c inner join emp_salary e on c.dept_id = e.dept_id and c.salary = e.salary
+
+
+with cte as(
+select dept_id, salary from emp_salary group by dept_id, salary having count(1)=1)
+select * from emp_salary e  left join cte c on e.dept_id = c.dept_id and c.salary = e.salary where c.dept_id is null
